@@ -30,6 +30,7 @@ describe('test networkAdd', () => {
 describe('test usable', () => {
   it('test usable', () => {
     expect(ip2v4(usableip('158.108.0.2',24).data1) + ' - ' + ip2v4(usableip('158.108.0.2',24).data2)).to.equal('158.108.0.1 - 158.108.0.254');
+    console.log(ip2v4(usableip('158.108.0.2',32).data1) + ' - ' + ip2v4(usableip('158.108.0.2',32).data2));
   })
 })
 

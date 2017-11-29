@@ -121,9 +121,7 @@ export const allposibleIp = (ipv4,n) =>
     var allIP = new Array();
     var size = subnetClass(n).classsize;
     var startIp = networkAdd(ipv4,size);
-    //console.log(ip2v4(startIp));
     var stopIp = broadcast(ipv4,size);
-    //console.log(ip2v4(stopIp));
     var ip = startIp;
     var i = 1;
     allIP[0] = ip2v4(ip);
