@@ -31,10 +31,11 @@ export const ip2v4 = ipv4 => {
     return ip;
 }
 
-const map = { 'ANY': 0, 'A': 7, 'B': 15, 'C': 23};
+const map = {'Any': 0, 'A': 7, 'B': 15, 'C': 23};
+
 export const genSubnetClass = c =>{
     const a = new Array(32 - map[c]).fill(0);
-    const b = a.map((number, index) => ip2v4(conv2subnet(index+1+map[c])) + "/" + (index+1+map[c]));
+    const b = a.map((number, index) => ip2v4(conv2subnet(index+1+map[c])) + "/" + (index+1+map[c])).reverse();
     return b;
 }
 
@@ -46,12 +47,16 @@ export const networkAdd = (ipv4,n) =>{
 
 export const usableip = (ipv4,n) => {
     var netadd = networkAdd(ipv4,n);
+
+    if(n>=31)
+    {
+        return "none";
+    }
+
     var ip1 = netadd + 1;
     var ip2 = netadd + (~conv2subnet(n)) - 1;
-    return {
-        data1: ip1,
-        data2: ip2
-    };  
+
+    return ip2v4(ip1) + ' - ' + ip2v4(ip1);
 }
 
 export const broadcast = (ipv4,n) => {
@@ -66,6 +71,10 @@ export const totalhost = (n) => {
 
 export const usablehost = (n) => {
     var usablehost = (1 << (32-n)) - 2;
+    if(usablehost < 0)
+    {
+        return 0;
+    }
     return usablehost;
 }
 
@@ -109,11 +118,17 @@ export const ipType = (ipv4) => {
     return type;
 }
 
-export const hexIP = (ipv4) => {
+export const hexIp = (ipv4) => {
     var hexString = "";
     var ip = v42ip(ipv4);
     hexString = ip.toString(16);
     return hexString;
+}
+
+export const binaryIp = (ipv4) => {
+    var binum = 0;
+    var ip = v42ip(ipv4);
+    return binum = ip.toString(2)
 }
 
 export const allposibleIp = (ipv4,n) =>
@@ -124,10 +139,15 @@ export const allposibleIp = (ipv4,n) =>
     var stopIp = broadcast(ipv4,size);
     var ip = startIp;
     var i = 1;
+    if(n >= 31)
+    {
+        allIP = "none";
+        return allIP;
+    }
     allIP[0] = ip2v4(ip);
      while (ip < stopIp)
      {
-        allIP[i] =  ip2v4(usableip(ip2v4(ip),n).data1) + ' - ' + ip2v4(usableip(ip2v4(ip),n).data2);
+        allIP[i] =  usableip(ip2v4(ip),n);
         i++;
         allIP[i] =  ip2v4(broadcast(ip2v4(ip),n));
         ip = broadcast(ip2v4(ip),n) + 1;
@@ -139,4 +159,10 @@ export const allposibleIp = (ipv4,n) =>
         }
      }
     console.log(allIP);
+    return allIP;
+}
+
+export const checkIpv4 = (ip) => {
+    const regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    return regex.test(ip);
 }
