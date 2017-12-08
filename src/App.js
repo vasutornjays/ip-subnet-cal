@@ -60,7 +60,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.subnet)
+    console.log(this.state.allPossible)
     const { classIp, ip, subnet } = this.state;
     return (
       <div className="App">
@@ -183,7 +183,7 @@ class App extends Component {
                 </tbody>
               </table>
             }
-            {/* {
+            {
               this.state.find &&
               <div>
                 <div className="page-header">
@@ -200,8 +200,8 @@ class App extends Component {
                       <tbody>
                         {
                           this.state.allPossible.map((allposibleIp) => (
-                            <tr key={allposibleIp}>
-                              <td>{allposibleIp}</td>
+                            <tr key={allposibleIp.start}>
+                              <td>{allposibleIp.start}</td>
                               <td>{allposibleIp.useable}</td>
                               <td>{allposibleIp.end}</td>
                             </tr>
@@ -210,7 +210,7 @@ class App extends Component {
                   </tbody>
                 </table>
               </div>
-            } */}
+            }
         </div>
       </div>
     );

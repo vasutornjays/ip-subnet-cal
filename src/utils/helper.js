@@ -133,27 +133,31 @@ export const binaryIp = (ipv4) => {
 
 export const allposibleIp = (ipv4,n) =>
 {
-    var allIP = new Array();
+    var a = [
+        {
+        start: String,
+        useable: String,
+        end: String
+        }
+   ];
     var size = subnetClass(n).classsize;
     var startIp = networkAdd(ipv4,size);
     var stopIp = broadcast(ipv4,size);
     var ip = startIp;
     var i = 0;
-    allIP[0] = ip2v4(ip);
-    while (ip < stopIp)
-    {
-        allIP[i] = {};
-        allIP[i].usable =  usableip(ip2v4(ip),n);
-        allIP[i].end =  ip2v4(broadcast(ip2v4(ip),n));
+     while (ip < stopIp)
+     {
+        a.push({
+            start: ip2v4(ip),
+            useable: usableip(ip2v4(ip),n),
+            end: ip2v4(broadcast(ip2v4(ip),n))
+        });
         ip = broadcast(ip2v4(ip),n) + 1;
-        if(ip < stopIp)
-        {
-            allIP[i+1] = ip2v4(ip);
-        }
-        i++;
+        i++
      }
-     return allIP;
+    return a;
 }
+
 
 export const checkIpv4 = (ip) => {
     const regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
