@@ -56,7 +56,7 @@ export const usableip = (ipv4,n) => {
     var ip1 = netadd + 1;
     var ip2 = netadd + (~conv2subnet(n)) - 1;
 
-    return ip2v4(ip1) + ' - ' + ip2v4(ip1);
+    return ip2v4(ip1) + ' - ' + ip2v4(ip2);
 }
 
 export const broadcast = (ipv4,n) => {
@@ -138,28 +138,21 @@ export const allposibleIp = (ipv4,n) =>
     var startIp = networkAdd(ipv4,size);
     var stopIp = broadcast(ipv4,size);
     var ip = startIp;
-    var i = 1;
-    if(n >= 31)
-    {
-        allIP = "none";
-        return allIP;
-    }
+    var i = 0;
     allIP[0] = ip2v4(ip);
-     while (ip < stopIp)
-     {
-        allIP[i] =  usableip(ip2v4(ip),n);
-        i++;
-        allIP[i] =  ip2v4(broadcast(ip2v4(ip),n));
+    while (ip < stopIp)
+    {
+        allIP[i] = {};
+        allIP[i].usable =  usableip(ip2v4(ip),n);
+        allIP[i].end =  ip2v4(broadcast(ip2v4(ip),n));
         ip = broadcast(ip2v4(ip),n) + 1;
-        i++;
         if(ip < stopIp)
         {
-            allIP[i] = ip2v4(ip);
-            i++;
+            allIP[i+1] = ip2v4(ip);
         }
+        i++;
      }
-    console.log(allIP);
-    return allIP;
+     return allIP;
 }
 
 export const checkIpv4 = (ip) => {

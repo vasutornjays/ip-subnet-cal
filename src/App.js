@@ -183,16 +183,34 @@ class App extends Component {
                 </tbody>
               </table>
             }
-            {
+            {/* {
               this.state.find &&
               <div>
                 <div className="page-header">
-                  <h2> All Possible IP</h2>
+                  <h2> All Possible IP </h2>
                 </div>
-                {/* table */}
-
+                  <table className="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Network Address</th>
+                          <th>Usable Host Range</th>
+                          <th>Broadcast Address</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          this.state.allPossible.map((allposibleIp) => (
+                            <tr key={allposibleIp}>
+                              <td>{allposibleIp}</td>
+                              <td>{allposibleIp.useable}</td>
+                              <td>{allposibleIp.end}</td>
+                            </tr>
+                          ))
+                        }
+                  </tbody>
+                </table>
               </div>
-            }
+            } */}
         </div>
       </div>
     );
